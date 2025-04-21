@@ -19,7 +19,7 @@ export class StoreImageService {
   }
 
   async processAndStore(file: IFile): Promise<ImagePayloadDto> {
-    this.logger.log('🔄 Загрузка изображения');
+    this.logger.log('🔄 Uploading image');
 
     const { width, height } = await this.imageProcessService.getMetadata(
       file.buffer,
@@ -29,7 +29,7 @@ export class StoreImageService {
       throw new ImageSizeReadException();
     }
 
-    this.logger.log(`📐 Размер изображения: ${width}x${height}`);
+    this.logger.log(`📐 Image dimensions: ${width}x${height}`);
 
     const halfWidth = Math.floor(width / 2);
     const halfHeight = Math.floor(height / 2);
@@ -41,7 +41,7 @@ export class StoreImageService {
       { left: 0, top: halfHeight },
     ];
 
-    this.logger.log('✂️ Начинается разрезка изображения на 4 сегмента');
+    this.logger.log('✂️ Starting image segmentation into 4 parts');
 
     const segmentPromises = positions.map(async (pos, i) => {
       const region = {
@@ -56,7 +56,7 @@ export class StoreImageService {
         region,
       );
 
-      this.logger.log(`📦 Сегмент ${i + 1} извлечён`);
+      this.logger.log(`📦 Segment ${i + 1} extracted`);
 
       const blurOptions = this.getSegmentBlurEdges(i);
       const blurredSegment = await this.imageProcessService.addBlurToSegment(
@@ -67,14 +67,14 @@ export class StoreImageService {
       const segmentPath = path.join(this.imagesDir, `${i + 1}.png`);
       await fs.promises.writeFile(segmentPath, new Uint8Array(blurredSegment));
 
-      this.logger.log(`💾 Сегмент ${i + 1} сохранён в файл: ${segmentPath}`);
+      this.logger.log(`💾 Segment ${i + 1} saved to file: ${segmentPath}`);
 
       return blurredSegment;
     });
 
     const segments = await Promise.all(segmentPromises);
 
-    this.logger.log('🧩 Объединение сегментов в финальное изображение');
+    this.logger.log('🧩 Combining segments into final image');
 
     const canvas = this.imageProcessService.createCanvas(width, height);
 
@@ -91,7 +91,7 @@ export class StoreImageService {
       finalImagePath,
     );
 
-    this.logger.log(`✅ Финальное изображение сохранено: ${finalImagePath}`);
+    this.logger.log(`✅ Final image saved to: ${finalImagePath}`);
 
     return ImagePayloadDto.create({ imagePath: finalImagePath });
   }
