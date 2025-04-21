@@ -62,11 +62,11 @@ This service allows uploading an image, splitting it into 4 equal parts, applyin
 
 ## 🖼️ Example Input:
 
-![input](https://github.com/Martirosyan-Davit/image-processing/blob/main/input.png)
+![input](https://github.com/Martirosyan-Davit/image-processing/blob/main/example/input.png)
 
 ## 🖼️ Example Output:
 
-![output](https://github.com/Martirosyan-Davit/image-processing/blob/main/output.png)
+![output](https://github.com/Martirosyan-Davit/image-processing/blob/main/example/output.png)
 
 # 📁 Output Directory
 
