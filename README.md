@@ -62,10 +62,11 @@ This service allows uploading an image, splitting it into 4 equal parts, applyin
 
 ## 🖼️ Example Input:
 
-
+![input](https://github.com/Martirosyan-Davit/image-processing/blob/main/input.png)
 
 ## 🖼️ Example Output:
 
+![output](https://github.com/Martirosyan-Davit/image-processing/blob/main/output.png)
 
 # 📁 Output Directory
 
@@ -75,7 +76,14 @@ All results are saved in the /images directory:
 
 - final.png
 
-// fix 
+
+## 🔧 Environment Setup
+
+Before running the project, copy the example environment file:
+
+```bash
+cp .env.example .env
+```
 
 # 🚀 Run locally
 ```
