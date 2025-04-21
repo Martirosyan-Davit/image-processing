@@ -5,13 +5,11 @@ import {
   Post,
   UploadedFile,
 } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 import { ImagePayloadDto } from '../../common/dto/image-payload.dto';
 import { ApiFile } from '../../decorators';
-import {
-  ApiController,
-  ApiOkResponseOptions,
-} from '../../decorators/api.decorators';
+import { ApiController } from '../../decorators/api.decorators';
 import { IFile } from '../../interfaces';
 import { FileService } from './file.service';
 
@@ -22,9 +20,9 @@ export class FileController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiFile({ name: 'file' })
-  @ApiOkResponseOptions({
+  @ApiOkResponse({
     type: ImagePayloadDto,
-    summary: 'Upload image.',
+    description: 'Upload image.',
   })
   uploadImage(@UploadedFile('file') file?: IFile): Promise<ImagePayloadDto> {
     if (!file) {
